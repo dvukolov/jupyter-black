@@ -24,7 +24,9 @@ define(['./kernel_exec_on_cell'], function(kernel_exec_on_cell) {
             "    import black",
             "    import re",
             "    cell_text = re.sub('^%', '#%#', cell_text, flags=re.M)",
+            "    semicolon = cell_text.rstrip().endswith(';')",
             "    reformated_text = black.format_str(cell_text, mode=black.FileMode(line_length=110))",
+            "    if semicolon: reformated_text = reformated_text.rstrip() + ';\\n'",
             "    return re.sub('^#%#', '%', reformated_text, flags=re.M)"].join("\n"),
             "prefix": "print(json.dumps(black_reformat(u",
             "postfix": ")))"
